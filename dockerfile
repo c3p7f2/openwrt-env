@@ -1,6 +1,7 @@
 # 使用ubuntu作为基础镜像
 FROM ubuntu:latest
 
+ARG DEBIAN_FRONTEND=noninteractive
 
 
 # 复制entrypoint脚本到容器中
