@@ -1,4 +1,5 @@
 #!/bin/bash
+export DEBIAN_FRONTEND=noninteractive
 apt-get update && apt-get install -y \
     wget curl 
 # 检查openwrt_upstream参数是否存在
