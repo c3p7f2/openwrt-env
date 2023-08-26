@@ -22,6 +22,6 @@ jobs:
 
       - name: Run container
         run: |
-          docker run --rm -it -v $(pwd):/output \
+          docker run --rm -it -v $(pwd):/bin-output \
           -e config="https://github.com/c3p7f2/build-openwrt/raw/stable/configs/x86/.config" openwrt \
           -e openwrt_upstream="https://github.com/coolsnowwolf/lede"
