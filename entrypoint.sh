@@ -1,5 +1,6 @@
 #!/bin/bash
-
+RUN apt-get update && apt-get install -y \
+    wget curl 
 # 检查openwrt_upstream参数是否存在
 if [ -z "$openwrt_upstream" ]; then
     echo "Error: openwrt_upstream parameter is required."
