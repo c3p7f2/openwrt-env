@@ -38,16 +38,16 @@ apt-get update && apt-get install -y \
     libpython3-dev lld lldb python3-ply re2c
 
 # 克隆openwrt源码仓库
-git clone $openwrt_upstream
+git clone $openwrt_upstream /openwrt
 
 # 进入openwrt目录
-mkdir -p /openwrt && cd /openwrt
+ cd /openwrt
 
 # 更新并安装feeds
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
 # 编译openwrt固件
-cp /tmp/config /openwrt/.config &&
+cp /tmp/config /openwrt/.config && make defconfig \
     make -j$(nproc)
 
 # 将编译好的固件复制到容器的根目录
