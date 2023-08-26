@@ -17,6 +17,6 @@ jobs:
         run: |
           docker build -t openwrt .        
           docker run --rm -i -v $(pwd):/bin-output \
-          -e config="https://github.com/c3p7f2/build-openwrt/raw/stable/configs/x86/.config" \
+          -e config="https://github.com/coolsnowwolf/lede/raw/master/target/linux/x86/config-5.15" \
           -e openwrt_upstream="https://github.com/coolsnowwolf/lede" \
           openwrt

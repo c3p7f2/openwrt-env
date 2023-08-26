@@ -1,7 +1,7 @@
 #!/bin/bash
 export DEBIAN_FRONTEND=noninteractive
 apt-get update && apt-get install -y \
-    wget curl 
+    wget curl
 # 检查openwrt_upstream参数是否存在
 if [ -z "$openwrt_upstream" ]; then
     echo "Error: openwrt_upstream parameter is required."
@@ -13,7 +13,6 @@ if [ -z "$config" ]; then
     echo "Error: config parameter is required."
     exit 1
 fi
-
 
 # 使用curl命令尝试访问config参数
 mkdir -p /tmp
@@ -41,14 +40,26 @@ apt-get update && apt-get install -y \
 git clone $openwrt_upstream /openwrt
 
 # 进入openwrt目录
- cd /openwrt
+cd /openwrt
 
 # 更新并安装feeds
+bash /add-package.sh && git pull
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
 # 编译openwrt固件
-cp /tmp/config /openwrt/.config && make defconfig \
-    make -j$(nproc)
+cp /tmp/config /openwrt/.config
+echo -e "$(nproc) thread compile"
+make diffconfig
+make target/compile -j$(nproc) IGNORE_ERRORS="m n" BUILD_LOG=1 ||
+    yes n | make target/compile -j1 V=s IGNORE_ERRORS=1
+make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
+make package/index
+
+make package/install -j$(nproc) || make package/install -j1 V=s
+make target/install -j$(nproc) || make target/install -j1 V=s
+echo "status=success" >>$GITHUB_OUTPUT
+make json_overview_image_info
+make checksum
 
 # 将编译好的固件复制到容器的根目录
 mv bin/targets/*/*/* /bin-output
