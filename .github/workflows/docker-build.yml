@@ -13,15 +13,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: user/app:latest
-
       - name: Run container
         run: |
+          docker build -t openwrt .        
           docker run --rm -it -v $(pwd):/bin-output \
-          -e config="https://github.com/c3p7f2/build-openwrt/raw/stable/configs/x86/.config" openwrt \
-          -e openwrt_upstream="https://github.com/coolsnowwolf/lede"
+          -e config="https://github.com/c3p7f2/build-openwrt/raw/stable/configs/x86/.config" \
+          -e openwrt_upstream="https://github.com/coolsnowwolf/lede" \
+          openwrt
