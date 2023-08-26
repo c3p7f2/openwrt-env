@@ -13,11 +13,6 @@ if [ -z "$config" ]; then
     exit 1
 fi
 
-# 检查配置文件是否存在
-if [ ! -f "$config" ]; then
-    echo "Error: config file $config does not exist."
-    exit 1
-fi
 
 # 使用curl命令尝试访问config参数
 mkdir -p /tmp
