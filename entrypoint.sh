@@ -1,5 +1,6 @@
 #!/bin/bash
-set -euo pipefail
+set -uo pipefail
+
 export DEBIAN_FRONTEND=noninteractive
 export TERM=linux
 export FORCE_UNSAFE_CONFIGURE=1
@@ -22,7 +23,7 @@ apt-get update -q && apt-get install -y -q \
 
 output "${INFO} 检查openwrt_upstream参数是否存在${NC}"
 if [ -z "$openwrt_upstream" ]; then
-    echo "Error: openwrt_upstream parameter is required."
+    echo -e "${ERROR}Error: openwrt_upstream parameter is required.${NC}"
     exit 1
 fi
 
@@ -33,7 +34,7 @@ apt-get update -q && apt-get install -y -q \
     libpython3-dev lld lldb python3-ply re2c
 
 output "${INFO} 克隆openwrt源码仓库${NC}"
-git clone $openwrt_upstream /openwrt
+git clone --depth=1 $openwrt_upstream /openwrt
 
 # 使用已缓存工具链的代码以加速编译流程
 ###
@@ -42,7 +43,7 @@ output "${WARNING} 进入openwrt目录${NC}"
 cd /openwrt
 
 output "${INFO} 更新并安装feeds${NC}"
-bash /add-package.sh && git pull
+if [ -f /add-package.sh ]; then bash /add-package.sh; fi
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
 output "${INFO} 检查config参数是否存在${NC}"
@@ -55,7 +56,7 @@ else
     # 如果有config参数，继续执行原来的代码
     # 使用curl命令尝试访问config参数
     mkdir -p /tmp
-    curl --output /dev/null --silent --head --fail "$config"
+    curl -L --output /dev/null --silent --head --fail "$config"
 
     # 判断curl命令的返回值
     if [ $? -eq 0 ]; then
