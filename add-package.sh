@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # 通用
 sed -i '$a src-git kenzo https://github.com/kenzok8/openwrt-packages' feeds.conf.default

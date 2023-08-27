@@ -1,7 +1,9 @@
-#!/bin/bash
+#!/bin/sh
 export DEBIAN_FRONTEND=noninteractive
+export TERM=linux
+
 apt-get update && apt-get install -y \
-    wget curl
+    wget curl rxvt-unicode
 # 检查openwrt_upstream参数是否存在
 if [ -z "$openwrt_upstream" ]; then
     echo "Error: openwrt_upstream parameter is required."
@@ -48,8 +50,11 @@ bash /add-package.sh && git pull
 
 # 编译openwrt固件
 cp /tmp/config /openwrt/.config
-echo -e "$(nproc) thread compile"
-make diffconfig
+
+make defconfig
+
+make download -j16
+
 make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
 
 make target/compile -j$(nproc) IGNORE_ERRORS="m n" BUILD_LOG=1 ||
@@ -59,7 +64,6 @@ make package/index
 
 make package/install -j$(nproc) || make package/install -j1 V=s
 make target/install -j$(nproc) || make target/install -j1 V=s
-echo "status=success" >>$GITHUB_OUTPUT
 make json_overview_image_info
 make checksum
 
