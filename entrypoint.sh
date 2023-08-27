@@ -50,6 +50,8 @@ bash /add-package.sh && git pull
 cp /tmp/config /openwrt/.config
 echo -e "$(nproc) thread compile"
 make diffconfig
+make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
+
 make target/compile -j$(nproc) IGNORE_ERRORS="m n" BUILD_LOG=1 ||
     yes n | make target/compile -j1 V=s IGNORE_ERRORS=1
 make package/compile -j$(nproc) IGNORE_ERRORS=1 || make package/compile -j1 V=s IGNORE_ERRORS=1
