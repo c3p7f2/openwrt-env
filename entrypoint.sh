@@ -55,6 +55,8 @@ make defconfig
 
 make download -j16
 
+make tools/compile -j$(nproc) || make tools/compile -j1 V=s
+
 make toolchain/compile -j$(nproc) || make toolchain/compile -j1 V=s
 
 make target/compile -j$(nproc) IGNORE_ERRORS="m n" BUILD_LOG=1 ||
