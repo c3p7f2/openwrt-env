@@ -50,13 +50,8 @@ output "${WARNING} 进入openwrt目录${NC}"
 cd /openwrt
 git pull
 
-output "${INFO} 更新并安装feeds${NC}"
-if [ -d /openwrt ]; then
-    output "${WARNING} /openwrt目录已经存在，跳过执行/add-package.sh${NC}"
-else
-    output "${INFO} 执行/add-package.sh （添加更多包）${NC}"
-    /add-package.sh
-fi
+output "${INFO} 添加更多包${NC}"
+/add-package.sh
 
 output "${INFO} 正在更新并安装feeds${NC}"
 ./scripts/feeds update -a && ./scripts/feeds install -a
