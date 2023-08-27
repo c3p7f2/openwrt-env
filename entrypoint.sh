@@ -35,25 +35,37 @@ apt-get update -qq && apt-get install -y -qq \
     aria2 clang clangd ecj lib32gcc-s1 libfuse-dev libncursesw5 \
     libpython3-dev lld lldb python3-ply re2c
 
-output "${INFO} 克隆openwrt源码仓库${NC}"
-git clone --depth=1 $openwrt_upstream /openwrt
+if [ -d /openwrt ]; then
+    output "${WARNING} /openwrt目录已经存在，跳过clone代码${NC}"
+
+else
+    output "${INFO} 克隆openwrt源码仓库${NC}"
+    git clone --depth=1 $openwrt_upstream /openwrt
+fi
 
 # 使用已缓存工具链的代码以加速编译流程
 ###
 
 output "${WARNING} 进入openwrt目录${NC}"
 cd /openwrt
+git pull
 
 output "${INFO} 更新并安装feeds${NC}"
-if [ -f /add-package.sh ]; then bash /add-package.sh; fi
+if [ -d /openwrt ]; then
+    output "${WARNING} /openwrt目录已经存在，跳过执行/add-package.sh${NC}"
+else
+    output "${INFO} 执行/add-package.sh （添加更多包）${NC}"
+    bash /add-package.sh
+fi
+
+output "${INFO} 正在更新并安装feeds${NC}"
 ./scripts/feeds update -a && ./scripts/feeds install -a
 
-output "${INFO} 检查config参数是否存在${NC}"
-
+output "${INFO} 获取配置${NC}"
+rm -f .config
 if [ -z "$config" ]; then
     # 如果没有config参数，根据默认机型生成配置
-    output "${WARNING} config参数不存在，生成默认配置${NC}"
-    make defconfig
+    output "${WARNING} config参数不存在，使用自适应配置${NC}"
 else
     # 如果有config参数，继续执行原来的代码
     # 使用curl命令尝试访问config参数
@@ -69,6 +81,7 @@ else
         cp $config .config
     fi
 fi
+make defconfig
 
 output "${INFO} 下载配置依赖包${NC}"
 make download -j8
@@ -77,4 +90,5 @@ output "${WARNING} 开始编译${NC}"
 make -j$(($(nproc) + 1)) || make -j1 V=s
 
 # 将编译好的固件复制到容器的根目录
-mv bin/targets/*/*/* /bin-output
+mkdir -p /output
+mv bin/targets/*/*/* /output
