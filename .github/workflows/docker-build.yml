@@ -20,6 +20,9 @@ jobs:
           sudo -E apt clean
           sudo -E timedatectl set-timezone "Asia/Shanghai"
 
+          curl -fsSL https://get.docker.com -o get-docker.sh
+          sudo sh get-docker.sh
+          
           docker rmi `docker images -q`
           sudo -E swapoff -a
           sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /etc/mysql /etc/php /swapfile

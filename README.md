@@ -7,8 +7,10 @@
 ```
 docker build -t openwrt .
 docker run --rm -it -v $(pwd):/output \
--e config=/path/to/your/config openwrt \
+-e config=/path/to/your/config *OR* https://a.b.com/config openwrt \
 -e openwrt_upstream=https://github.com/coolsnowwolf/lede
+
+二次编译重复运行docker run... 命令即可
 ```
 
 在线拉取镜像编译
