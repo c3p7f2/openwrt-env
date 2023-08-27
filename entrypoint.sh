@@ -1,6 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+set -euo pipefail
 export DEBIAN_FRONTEND=noninteractive
 export TERM=linux
+export FORCE_UNSAFE_CONFIGURE=1
+
 # 定义一些颜色变量
 ERROR='\033[0;31m'
 INFO='\033[0;32m'
