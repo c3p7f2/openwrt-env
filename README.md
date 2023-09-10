@@ -7,8 +7,9 @@
 ```
 docker build -t build-openwrt-env .
 docker run -i -v $(pwd)/openwrt:/openwrt \
--e config=/path/to/your/config *OR* https://a.b.com/config build-openwrt-env \
--e openwrt_upstream=https://github.com/coolsnowwolf/lede
+-e config=/path/to/your/config *OR* https://a.b.com/config \
+-e openwrt_upstream=https://github.com/coolsnowwolf/lede \
+build-openwrt-env
 
 二次编译重复运行docker run... 命令即可
 
@@ -20,6 +21,7 @@ docker run -i -v $(pwd)/openwrt:/openwrt \
 // 使用dockerhub上的镜像
 
 docker run -i -v $(pwd)/openwrt:/openwrt \
--e config=/path/to/your/config *OR* https://a.b.com/config shashiikora/build-openwrt-env:latest \
--e openwrt_upstream=https://github.com/coolsnowwolf/lede
+-e config=/path/to/your/config *OR* https://a.b.com/config \
+-e openwrt_upstream=https://github.com/coolsnowwolf/lede \
+shashiikora/build-openwrt-env:latest
 ```
