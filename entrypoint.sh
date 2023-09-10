@@ -86,5 +86,3 @@ make -j$(($(nproc) + 1)) || make -j1 V=s
 
 # 将编译好的固件复制到容器的根目录
 output "${INFO} 编译结束${NC}"
-mkdir -p /output
-mv bin/targets/*/*/* /output
