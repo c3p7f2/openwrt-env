@@ -1,10 +1,16 @@
 name: Docker Build
 
 on:
-  push:
+  # push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      run:
+        description: "Build Test"
+        required: true
+        default: "true"    
 
 jobs:
   docker-build:
