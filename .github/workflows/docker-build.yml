@@ -1,8 +1,8 @@
 name: Build Test
 
 on:
-  # push:
-  #  branches: [main]
+  push:
+   branches: [main]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -27,10 +27,10 @@ jobs:
 
       - name: Run container
         run: |
-          docker build -t openwrt .        
-          docker run --rm -i -v $(pwd):/output \
-          -e openwrt_upstream="https://github.com/coolsnowwolf/lede" \
-          openwrt
+          docker build -t build-openwrt-env .
+          docker run -it -v $(pwd)/openwrt:/openwrt \
+          -e config=/path/to/your/config *OR* https://a.b.com/config build-openwrt-env \
+          -e openwrt_upstream=https://github.com/coolsnowwolf/lede
 
       - name: LS
         run: |

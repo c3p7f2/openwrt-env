@@ -7,9 +7,9 @@
 本地构建
 
 ```
-docker build -t openwrt .
+docker build -t build-openwrt-env .
 docker run -it -v $(pwd)/openwrt:/openwrt \
--e config=/path/to/your/config *OR* https://a.b.com/config openwrt \
+-e config=/path/to/your/config *OR* https://a.b.com/config build-openwrt-env \
 -e openwrt_upstream=https://github.com/coolsnowwolf/lede
 
 二次编译重复运行docker run... 命令即可
