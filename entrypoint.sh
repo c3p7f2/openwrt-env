@@ -21,7 +21,8 @@ output() {
 
 output "${INFO} 基础依赖安装${NC}"
 apt-get update -qq && apt-get install -y -qq \
-    wget curl rxvt-unicode
+    wget curl rxvt-unicode \
+    > /dev/null 2>&1
 
 output "${INFO} 检查openwrt_upstream参数是否存在${NC}"
 if [ -z "$openwrt_upstream" ]; then

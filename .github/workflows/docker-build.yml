@@ -16,11 +16,11 @@ jobs:
   docker-build:
     runs-on: ubuntu-latest
     steps:
-      # - name: 精简系统释放磁盘空间 (Ubuntu)
-      #   uses: jlumbroso/free-disk-space@main
-      #   with:
-      #     tool-cache: true
-      #     docker-images: false
+      - name: 精简系统释放磁盘空间 (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          docker-images: false
 
       - name: Checkout
         uses: actions/checkout@v2
