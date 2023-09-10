@@ -2,8 +2,6 @@
 
 用 Docker 一键编译 OpenWrt，专注于固件本身。
 
-[![Docker Build](https://github.com/c3p7f2/openwrt-env/actions/workflows/docker-build.yml/badge.svg)](https://github.com/c3p7f2/openwrt-env/actions/workflows/docker-build.yml)
-
 本地构建
 
 ```

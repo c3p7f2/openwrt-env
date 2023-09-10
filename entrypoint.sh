@@ -37,7 +37,7 @@ apt-get update -qq && apt-get install -y -qq \
     libpython3-dev lld lldb python3-ply re2c \
     > /dev/null 2>&1
 
-if [ -d /openwrt ]; then
+if [ -d /openwrt/.git ]; then
     output "${WARNING} /openwrt目录已经存在，跳过clone代码${NC}"
 
 else
