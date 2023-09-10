@@ -28,7 +28,7 @@ jobs:
       - name: Run container
         run: |
           docker build -t build-openwrt-env .
-          docker run -it -v $(pwd)/openwrt:/openwrt \
+          docker run -i -v $(pwd)/openwrt:/openwrt \
           -e openwrt_upstream="https://github.com/coolsnowwolf/lede" \
           build-openwrt-env
 
