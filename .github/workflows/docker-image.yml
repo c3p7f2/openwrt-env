@@ -22,8 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        platform: [amd64, arm64]
+
 
     steps:
       - name: Checkout
