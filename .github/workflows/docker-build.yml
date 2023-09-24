@@ -29,14 +29,14 @@ jobs:
         run: |
           sed -i 's/mirrors\.tuna\.tsinghua\.edu\.cn/azure.archive.ubuntu.com/g' dockerfile
 
-          sudo docker build -t build-openwrt-env . && 
-          
-          sudo docker run -i \ 
+          sudo docker build -t openwrt-build .
+
+          sudo docker run -i \
           -v $(pwd)/openwrt:/home/builder/openwrt \
           -v $(pwd)/.config:/home/builder/.config \
           -e openwrt_upstream=https://github.com/openwrt/openwrt \
           -e openwrt_upstream_branch=openwrt-23.05 \
-          build-openwrt-env
+          openwrt-build
 
       - name: LS
         run: |
