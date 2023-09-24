@@ -27,6 +27,8 @@ jobs:
 
       - name: Run container
         run: |
+          sed -i 's/mirrors\.tuna\.tsinghua\.edu\.cn/azure.archive.ubuntu.com/g' Dockerfile
+          
           sudo docker build -t build-openwrt-env . && 
           
           sudo docker run -i \ 
