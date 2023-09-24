@@ -34,7 +34,7 @@ jobs:
       - name: Publish to Registry
         uses: elgohr/Publish-Docker-Github-Action@v5
         with:
-          name: shashiikora/build-openwrt-env
+          name: shashiikora/openwrt-build
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PAT }}
           tags: "latest,${{ matrix.platform }}"
