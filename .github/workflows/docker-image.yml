@@ -38,4 +38,4 @@ jobs:
           username: ${{ secrets.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PAT }}
           tags: "latest,${{ matrix.platform }}"
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
