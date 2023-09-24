@@ -57,7 +57,7 @@ else
     cd $OPENWRT_PATH
     git init
     git remote add origin $openwrt_upstream
-    git pull --depth=1
+    git fetch
     git checkout $openwrt_upstream_branch -f
 
 fi
