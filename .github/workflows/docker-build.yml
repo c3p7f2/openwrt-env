@@ -29,7 +29,7 @@ jobs:
         run: |
           sudo docker build -t build-openwrt-env . && 
           
-          sudo docker run -it \ 
+          sudo docker run -i \ 
           -v $(pwd)/openwrt:/home/builder/openwrt \
           -v $(pwd)/.config:/home/builder/.config \
           -e openwrt_upstream=https://github.com/openwrt/openwrt \
